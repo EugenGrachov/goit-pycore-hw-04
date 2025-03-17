@@ -8,19 +8,25 @@ def get_cats_info(path:str):
 				parts = line.strip().split(",")
 				if len(parts) == 3:
 
-					cat_info = {"id": parts[0], "name": parts[1], "age": parts[2]}
-					cats_info.append(cat_info)
-				
-				# else:
-				# 	print(f"Неправильний формат даних в строці: {line}")
+					cat = {"id": parts[0], "name": parts[1], "age": parts[2]}
+					cats_info.append(cat)
+
+				else:
+					print(f"Введено неправильний формат даних в строці: {line}")
 
 	except FileNotFoundError:
-		raise FileNotFoundError("Файл не знайдено.")
+		print("Файл не знайдено.")
+
+	except (IOError) as msg:
+		print(f"При обробці файлу сталася помилка: {msg}")
 	
-	except (IOError, ValueError) as msg:
-		raise IOError(f"При обробці файлу сталася помилка: {msg}")
-	
+	except ValueError:
+		print(f"Виникла помилка: {line.strip()} було пропущено")
+
+	except Exception as e:
+		print(f"Виникла помилка {e}")
+
 	return cats_info
 
 cats_info = get_cats_info("C:\\my_repo\\goit-pycore-hw-04\\cats_file.txt")
-print(cats_info)
+print (cats_info)
